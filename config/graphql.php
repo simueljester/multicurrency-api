@@ -80,7 +80,7 @@ return [
                 'exchangeRates' => App\GraphQL\Queries\ExchangeRateQuery::class,
             ],
             'mutation' => [
-                // ExampleMutation::class,
+                'createCompany' => \App\GraphQL\Mutations\CreateCompanyMutation::class,
             ],
             // The types only available in this schema
             'types' => [
