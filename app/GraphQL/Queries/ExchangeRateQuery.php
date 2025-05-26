@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Invoice;
+use App\Models\ExchangeRate;
 use Closure;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -12,21 +12,21 @@ use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 
-class InvoiceQuery extends Query
+class ExchangeRateQuery extends Query
 {
     protected $attributes = [
-        'name' => 'invoice',
+        'name' => 'exchangeRate',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('InvoicePagination');
+         return GraphQL::type('ExchangeRatePagination');
     }
 
     public function args(): array
     {
-          return [
+       return [
             'page' => [
                 'type' => Type::int(),
                 'description' => 'Page number',
@@ -37,15 +37,10 @@ class InvoiceQuery extends Query
                 'description' => 'Number of items per page',
                 'defaultValue' => 10,
             ],
-            'id' => [
-                'type' => Type::int(),
-                'description' => 'Filter by id',
-                'defaultValue' => null,
-            ],
-            'keyword' => [
+            'sortFetchedAt' => [
                 'type' => Type::string(),
-                'description' => 'Search title via keyword',
-                'defaultValue' => null,
+                'description' => 'Sort by fetched_at',
+                'defaultValue' => 'ASC',
             ],
         ];
     }
@@ -54,15 +49,9 @@ class InvoiceQuery extends Query
     {
         /** @var SelectFields $fields */
         $fields = $getSelectFields();
-        $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $id = $args['id'];
-        $keyword = $args['keyword'];
-
-        $query = Invoice::with([...$with])
-        ->when($id, fn ($q) => $q->where('id', $id))
-        ->when($keyword, fn ($q,$keyword) => $q->where('title', 'like', "%{$keyword}%"));
+        $query = ExchangeRate::with($with)->when(isset($args['sortFetchedAt']), fn ($q) => $q->orderBy('fetched_at', $args['sortFetchedAt']));;
 
         // Paginate with default args or passed ones
         $paginator = $query->paginate($args['limit'] ?? 10, ['*'], 'page', $args['page'] ?? 1);

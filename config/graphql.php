@@ -77,6 +77,7 @@ return [
             'query' => [
                 'companies' => App\GraphQL\Queries\CompaniesQuery::class,
                 'invoices' => App\GraphQL\Queries\InvoiceQuery::class,
+                'exchangeRates' => App\GraphQL\Queries\ExchangeRateQuery::class,
             ],
             'mutation' => [
                 // ExampleMutation::class,
@@ -114,6 +115,8 @@ return [
         'CompanyPagination' => App\GraphQL\Types\CompanyPaginationType::class,
         'Invoice' => App\GraphQL\Types\InvoiceType::class,
         'InvoicePagination' => App\GraphQL\Types\InvoicePaginationType::class,
+        'ExchangeRate' => App\GraphQL\Types\ExchangeRateType::class,
+        'ExchangeRatePagination' => App\GraphQL\Types\ExchangeRatePaginationType::class,
     ],
 
     // This callable will be passed the Error object for each errors GraphQL catch.
