@@ -72,13 +72,13 @@
                     <li>Navigate into the project: <code class="bg-gray-200 px-2 py-1 rounded">cd multicurrency-api</code></li>
                     <li>Install dependencies: 
                         <code class="bg-gray-200 px-2 py-1 rounded">composer install</code> &
-                        <code class="bg-gray-200 px-2 py-1 rounded">npm install</code> (optional)
+                        <code class="bg-gray-200 px-2 py-1 rounded">npm install <small>(optional)</small></code> 
                     </li>
                     <li>Rename <code>.env.example</code> to <code>.env</code> and paste content from email</li>
                     <li>Generate App Key: <code class="bg-gray-200 px-2 py-1 rounded">php artisan key:generate</code></li>
                     <li>Run the server: 
                         <code class="bg-gray-200 px-2 py-1 rounded">php artisan serve</code> & 
-                        <code class="bg-gray-200 px-2 py-1 rounded">npm run dev</code> (optional) — usually at <span class="text-sm text-gray-500">http://127.0.0.1:8000</span></li>
+                        <code class="bg-gray-200 px-2 py-1 rounded">npm run dev <small>(optional)</small></code> — usually at <span class="text-sm text-gray-500">http://127.0.0.1:8000</span></li>
                     <li>Ensure DB settings in <code>.env</code> match: DB name = <code>db_multi_currency_invoices</code>, username = <code>root</code>, password = <code>''</code></li>
                     <li>Run migrations: <code class="bg-gray-200 px-2 py-1 rounded">php artisan migrate</code></li>
                     <li>Populate currency data: <code class="bg-gray-200 px-2 py-1 rounded">php artisan currencies:sync</code></li>
