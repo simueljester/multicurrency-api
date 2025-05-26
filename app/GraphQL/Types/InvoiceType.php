@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Types;
 
-use Log;
 use App\Models\Invoice;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
@@ -20,7 +19,7 @@ class InvoiceType extends GraphQLType
 
     public function fields(): array
     {
-           return [
+        return [
             'id' => ['type' => Type::nonNull(Type::int())],
             'company_id' => ['type' => Type::int()],
             'company' => [

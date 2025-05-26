@@ -20,12 +20,12 @@ class InvoiceResource extends JsonResource
         $record = [
             'id' => $this->id,
             'title' => $this->title,
-            'amount' => (float)$this->amount,
+            'amount' => (float) $this->amount,
             'currency_code' => $this->currency_code,
             'base_currency' => $this->base_currency,
             'exchange_rate' => $this->exchange_rate,
             'exchange_rate_timestamp' => $this->exchange_rate_timestamp->toDateTimeString(),
-            'amount_in_base_currency' => (float)$this->amount_in_base_currency,
+            'amount_in_base_currency' => (float) $this->amount_in_base_currency,
             'created_at' => $this->created_at->toDateTimeString(),
             'updated_at' => $this->updated_at->toDateTimeString(),
         ];

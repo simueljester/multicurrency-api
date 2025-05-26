@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::prefix('v1')->middleware('api','throttle:60,1')->group(function () {
+Route::prefix('v1')->middleware('api', 'throttle:60,1')->group(function () {
 
     Route::prefix('companies')->group(function () {
         Route::get('/', [CompanyController::class, 'index']);
