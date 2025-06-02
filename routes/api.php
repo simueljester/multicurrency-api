@@ -30,5 +30,6 @@ Route::prefix('v1')->middleware('api', 'throttle:60,1')->group(function () {
         Route::get('/', [InvoiceController::class, 'index']);
         Route::post('/store', [InvoiceController::class, 'store']);
         Route::get('/show/{invoice_id}', [InvoiceController::class, 'show']);
+        Route::put('/update/{invoice_id}', [InvoiceController::class, 'update']);
     });
 });

@@ -8,6 +8,7 @@ use App\Http\Repositories\CompanyRepository;
 use App\Http\Repositories\InvoiceRepository;
 use App\Http\Requests\GetInvoiceRequest;
 use App\Http\Requests\StoreInvoiceRequest;
+use App\Http\Requests\UpdateInvoiceRequest;
 use App\Http\Resources\InvoiceResource;
 use App\Services\ExchangeRateService;
 use Illuminate\Http\Request;
@@ -158,9 +159,43 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateInvoiceRequest $request,$invoiceId)
     {
-        //
+        $validated = $request->validated();
+        $company = $this->companyRepository->find($validated['company_id']);
+        $systemBaseCurrency = config('app.base_currency');
+        $companyCurrency = $company->base_currency;
+
+        try {
+            $rateData = $this->exchangeRateService->getLatestRate($systemBaseCurrency, $companyCurrency);
+
+            $amountInBase = $this->exchangeRateService->convertToBaseCurrency(
+                $validated['amount'],
+                $companyCurrency,
+                $systemBaseCurrency,
+                $rateData['from_currency'],
+                $rateData['rate']
+            );
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+
+        $invoiceData = [
+            'company_id' => $company->id,
+            'title' => $validated['title'],
+            'amount' => $validated['amount'],
+            'currency_code' => $companyCurrency,
+            'base_currency' => $systemBaseCurrency,
+            'exchange_rate_id' => $rateData['id'],
+            'exchange_rate' => $rateData['rate'],
+            'exchange_rate_timestamp' => $rateData['timestamp'],
+            'amount_in_base_currency' => $amountInBase,
+        ];
+
+        $invoice = $this->invoiceRepository->update($invoiceId,$invoiceData);
+
+        return new InvoiceResource($invoice);
     }
 
     /**

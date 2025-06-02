@@ -81,6 +81,7 @@ return [
             ],
             'mutation' => [
                 'createCompany' => \App\GraphQL\Mutations\CreateCompanyMutation::class,
+                'createExchangeRate' => \App\GraphQL\Mutations\ExchangeRateMutation::class,
             ],
             // The types only available in this schema
             'types' => [

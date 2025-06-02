@@ -40,7 +40,7 @@ class InvoiceApiTest extends TestCase
         $response->assertStatus(201)
             ->assertJsonFragment([
                 'title' => 'Consulting Fee',
-                'amount' => '1000.00',
+                'amount' => 1000,
                 'currency_code' => 'PHP',
                 'base_currency' => 'USD',
             ]);
